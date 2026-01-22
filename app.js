@@ -1,0 +1,31 @@
+let config = require('./config')
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const cors = require('cors');
+
+let app = express();
+
+const mongoose = require('mongoose');
+
+// mongo connect String
+mongoose.connect('mongodb://localhost:27017/mydb');
+
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(helmet());
+app.use(cors({
+  origin: 'http://localhost:8080',
+  credentials: true
+}));
+
+app.use('/auth', require('./routes/auth.route'));
+app.use('/user', require('./routes/user.route'));
+app.use('/admin', require('./routes/admin.route'));
+
+app.use(require('./middleware/passportJWT')().initialize());
+app.use(require('./middleware/errorHandler'));
+
+
+app.listen(config.app.port, () => console.log('Running...'));
