@@ -9,7 +9,8 @@ let app = express();
 const mongoose = require('mongoose');
 
 // mongo connect String
-mongoose.connect(config.mongoURL);
+mongoose.connect(config.mongoURL).then(() => console.log("MongoDB Connected ✅"))
+  .catch((err) => console.log("MongoDB Connection Error ❌", err.message));;
 
 
 app.use(express.json());
