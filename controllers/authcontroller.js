@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const validationHandler = require('../validations/validationHandler');
 
 const csrf = require('csurf');
-const csrfProtection = csrf({ cookie: true });
+// const csrfProtection = csrf({ cookie: true });
 
 
 exports.login = async (req, res, next) => {
@@ -29,7 +29,7 @@ exports.login = async (req, res, next) => {
         const accessToken = jwt.sign(
             { id: user.id, role: user.role },
             process.env.jwtSecret,
-            { expiresIn: '1m' }
+            { expiresIn: '1d' }
         );
 
         const refreshToken = jwt.sign(
@@ -51,17 +51,17 @@ exports.login = async (req, res, next) => {
         });
 
         // Generate and set CSRF token
-        const csrfToken = req.csrfToken();
-        res.cookie('XSRF-TOKEN', csrfToken, {
-            httpOnly: false, // Must be readable by JS
-            secure: true,
-            sameSite: 'strict'
-        });
+        // const csrfToken = req.csrfToken();
+        // res.cookie('XSRF-TOKEN', csrfToken, {
+        //     httpOnly: false, // Must be readable by JS
+        //     secure: true,
+        //     sameSite: 'strict'
+        // });
 
         res.json({
             user: { id: user.id, email: user.email, role: user.role },
             accessToken,
-            csrfToken
+            // csrfToken
         });
 
     } catch (err) {
@@ -123,7 +123,7 @@ exports.signup = async (req, res, next) => {
 
 
 exports.refreshToken = [
-    csrfProtection, // CSRF validation middleware
+    // csrfProtection, // CSRF validation middleware
     async (req, res, next) => {
         try {
             const refreshToken = req.cookies.refreshToken;

@@ -16,10 +16,10 @@ const authController = require('../controllers/authcontroller');
 const { isEmail, hasPassword, hasName } = require('../validations/validator');
 
 
-router.post('/login', [isEmail, hasPassword], csrfProtection, authController.login);
+router.post('/login', [isEmail, hasPassword],  authController.login);
 router.post('/signup', [isEmail, hasPassword, hasName], authController.signup);
 
-router.post('/refresh-token', csrfProtection, authController.refreshToken);
+router.post('/refresh-token',  authController.refreshToken);
 
 router.get(
     '/me',

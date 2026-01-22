@@ -9,7 +9,7 @@ let app = express();
 const mongoose = require('mongoose');
 
 // mongo connect String
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect(config.mongoURL);
 
 
 app.use(express.json());
@@ -28,4 +28,4 @@ app.use(require('./middleware/passportJWT')().initialize());
 app.use(require('./middleware/errorHandler'));
 
 
-app.listen(config.app.port, () => console.log('Running...'));
+app.listen(config.app.port, () => console.log('Running...' + config.app.port));
