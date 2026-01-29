@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 app.use(cors({
-  origin: 'http://localhost:8080',
+  origin: ['http://localhost:4200','http://10.57.88.165:3000','http://localhost:8080'],
   credentials: true
 }));
 
