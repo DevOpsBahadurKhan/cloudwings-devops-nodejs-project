@@ -16,13 +16,13 @@ const authController = require('../controllers/authcontroller');
 const { isEmail, hasPassword, hasName } = require('../validations/validator');
 
 
-router.post('/login', [isEmail, hasPassword],  authController.login);
-router.post('/signup', [isEmail, hasPassword, hasName], authController.signup);
+router.post('/auth/login', [isEmail, hasPassword],  authController.login);
+router.post('/auth/signup', [isEmail, hasPassword, hasName], authController.signup);
 
 router.post('/refresh-token',  authController.refreshToken);
 
 router.get(
-    '/me',
+    '/auth/me',
     passportJWT.authenticate(),
     verifyAccess('read', 'profile', 'own'),  // or 'any' if admin can access all
     authController.me

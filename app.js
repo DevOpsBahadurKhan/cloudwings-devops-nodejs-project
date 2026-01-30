@@ -21,9 +21,9 @@ app.use(cors({
   credentials: true
 }));
 
-app.use('/auth', require('./routes/auth.route'));
-app.use('/user', require('./routes/user.route'));
-app.use('/admin', require('./routes/admin.route'));
+app.use('/api', require('./routes/auth.route'));
+app.use('/api', require('./routes/user.route'));
+app.use('/api', require('./routes/admin.route'));
 
 app.use(require('./middleware/passportJWT')().initialize());
 app.use(require('./middleware/errorHandler'));

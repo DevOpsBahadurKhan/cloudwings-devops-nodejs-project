@@ -8,7 +8,7 @@ const controller = require('../controllers/admin.controller');
 
 
 router.patch(
-    '/role/:userId',
+    '/auth/role/:userId',
     passportJWT.authenticate(),
     verifyAccess('update', 'user', 'any'),
     controller.updateUserRole
