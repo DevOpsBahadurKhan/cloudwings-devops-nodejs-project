@@ -21,13 +21,29 @@ services:
       - my_network
 
   mongo:
-    image: mongo
+    image: mongo:4.4
     container_name: mongo
     ports:
       - "27017:27017"
     restart: unless-stopped
     volumes:
       - mongo_data:/data/db
+    networks:
+      - my_network
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
     networks:
       - my_network
 
