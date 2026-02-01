@@ -12,7 +12,6 @@ services:
       - .env
     depends_on:
       - mongo
-      - redis
     restart: unless-stopped
     volumes:
       - .:/usr/src/app
