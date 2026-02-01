@@ -1,12 +1,13 @@
-version: '3.9'
+version: "3.9"
 
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: fb
     ports:
-      - "8080:8080"
+      - "3000:3000"
     env_file:
       - .env
     depends_on:
@@ -16,6 +17,8 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+      - my_network
 
   mongo:
     image: mongo
@@ -23,6 +26,10 @@ services:
     ports:
       - "27017:27017"
     restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - my_network
 
   redis:
     image: redis
@@ -31,3 +38,12 @@ services:
     ports:
       - "6379:6379"
     restart: unless-stopped
+    networks:
+      - my_network
+
+volumes:
+  mongo_data:
+
+networks:
+  my_network:
+    driver: bridge
